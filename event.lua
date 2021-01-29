@@ -1,6 +1,12 @@
 local event = {}
 event.__index = event
 
+function event.new()
+    local new_event = setmetatable({}, event)
+    new_event:init()
+    return new_event
+end
+
 function event:init()
     self.events = {}
 end
@@ -45,10 +51,8 @@ event:init()
 
 return setmetatable(event, {
     __call = function()
-        local new_event = setmetatable({}, event)
-        new_event:init()
-        return new_event
+        return event.new()
     end,
 
-    new = event
+    new = event.new
 })
